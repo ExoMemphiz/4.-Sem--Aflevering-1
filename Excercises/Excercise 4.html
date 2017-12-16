@@ -1,0 +1,48 @@
+<body onload="fillTable()">
+    
+    <table id="table1">
+    </table>
+
+    <button onclick="filterData()">Filter</button>
+    <button onclick="fillTable()">Reset</button>
+
+</body>
+
+<script>
+    
+    var data = [
+        {name: "Test1", phone: "1234"},
+        {name: "T2", phone: "2345"},
+        {name: "Test3", phone: "3456"},
+        {name: "T4", phone: "4567"}
+    ];
+    
+    function createTableData(array) {
+        return array.map((item) => {
+            return "<tr><td>" + item.name + "</td><td>" + item.phone + "</td></tr>";
+        }).join("");
+    }
+    
+    function fillTable(customData) {
+        var head = "<thead><tr><th>Name</th><th>Phone</th></tr></thead>";
+        document.getElementById('table1').innerHTML = head + createTableData(customData ? customData : data);
+    }
+
+    function myFilter(array, filterCallback) {
+        var newArr = [];
+        for (var i = 0; i < array.length; i++) {
+            if (filterCallback(array[i])) {
+                newArr.push(array[i]);
+            }
+        }
+        return newArr;
+    }
+    
+    function filterData() {
+        var filtered = myFilter(data, (item) => {
+            return item.name.length <= 3;
+        });
+        fillTable(filtered);
+    }
+    
+</script>
